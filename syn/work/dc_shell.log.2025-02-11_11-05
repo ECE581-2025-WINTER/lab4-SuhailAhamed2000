@@ -1,0 +1,166 @@
+setting auto_restore_mw_cel_lib_setup true
+Initializing gui preferences from file  /u/suhaila/.synopsys_dv_prefs.tcl
+dc_shell> proc test {a1 b1 a2 b2} {
+if {$a2<=$a1 || $b2<=$b1} {
+puts "invalid"
+return
+}
+set l [expr $a2-$a1]
+set b [expr $b2-$b1]
+set area [expr $l*$b]
+return $area
+}
+dc_shell> set result [test 2 0 5 2]
+6
+dc_shell> set result [test 6 0 5 2]
+invalid
+dc_shell> set top_design fifo1_sram
+fifo1_sram
+dc_shell> source ../scripts/prob.tcl
+ref name   no of ref
+Error: Current design is not defined. (UID-4)
+Error: Can't find objects matching '*'. (UID-109)
+Error: extra positional option '==' (CMD-012)
+Error: extra positional option 'false' (CMD-012)
+dc_shell> set top_design fifo1_sram
+fifo1_sram
+dc_shell> source ../scripts/prob.tcl
+ref name   no of ref
+Error: Current design is not defined. (UID-4)
+Error: Can't find objects matching '*'. (UID-109)
+Error: extra positional option '==' (CMD-012)
+Error: extra positional option 'false' (CMD-012)
+dc_shell> source ../scripts/prob.tcl
+ref name   no of ref
+Error: Current design is not defined. (UID-4)
+Error: Can't find objects matching '*'. (UID-109)
+Error: extra positional option '==' (CMD-012)
+Error: extra positional option 'false' (CMD-012)
+dc_shell> proc test {} {
+set a [filter_collection [get_cells]  is_hierarchical == false]
+set b [list]
+foreach_in_collection c $a {set d [get_attribute $c ref_name]
+lappend b $d }
+set uniquelist [lsort -unique $b]
+set count 0
+foreach var $uniquelist {
+foreach all_ref $b {
+if {$var == $all_ref } {
+incr count
+}
+}
+puts "$var\t$count \n"
+set count 0
+}
+}
+dc_shell> puts "ref name   no of ref"
+ref name   no of ref
+dc_shell> set p [test]
+Error: Current design is not defined. (UID-4)
+Error: Can't find objects matching '*'. (UID-109)
+Error: extra positional option '==' (CMD-012)
+Error: extra positional option 'false' (CMD-012)
+dc_shell> proc test {} {
+set cells [filter_collection [get_cells]  is_hierarchical == false]
+set rlist [list]
+foreach_in_collection i $cells {set ref [get_attribute $i ref_name];
+lappend rlist $ref }
+set uniquelist [lsort -unique $rlist]
+set count 0
+foreach var $uniquelist {
+foreach all_ref $rlist {
+if {$var == $all_ref } {incr count
+}
+}
+puts "$var\t$count \n" ;
+set count 0
+}
+}
+dc_shell> puts "ref name   no of ref"
+ref name   no of ref
+dc_shell> set p [test]
+Error: Current design is not defined. (UID-4)
+Error: Can't find objects matching '*'. (UID-109)
+Error: extra positional option '==' (CMD-012)
+Error: extra positional option 'false' (CMD-012)
+dc_shell> pwd
+/u/suhaila/ECE581-2025/lab4-SuhailAhamed2000/syn/work
+dc_shell> set top_design fifo1_sram
+fifo1_sram
+dc_shell> proc test {} {
+set cells [filter_collection [get_cells]  is_hierarchical == false]
+set rlist [list]
+foreach_in_collection i $cells {set ref [get_attribute $i ref_name];
+lappend rlist $ref }
+set uniquelist [lsort -unique $rlist]
+set count 0
+foreach var $uniquelist {
+foreach all_ref $rlist {
+if {$var == $all_ref } {incr count
+}
+}
+puts "$var\t$count \n" ;
+set count 0
+}
+}
+dc_shell> puts "ref name   no of ref"
+ref name   no of ref
+dc_shell> set p [test]
+Error: Current design is not defined. (UID-4)
+Error: Can't find objects matching '*'. (UID-109)
+Error: extra positional option '==' (CMD-012)
+Error: extra positional option 'false' (CMD-012)
+dc_shell> proc get_instance_count {} {
+    # Step 1: Get all instances where "is_hierarchical == false"
+    set instances [get_cells -filter "is_hierarchical==false"]
+    # Step 2: Get a list of all the ref_name attributes for these instances
+    set ref_name_list {}
+    foreach inst $instances {
+        lappend ref_name_list [get_attribute $inst ref_name]
+    }
+    # Step 3: Sort and get unique ref_name values
+    set unique_ref_names [lsort -unique $ref_name_list]
+    # Step 4: Loop through each unique ref_name and count occurrences
+    foreach ref_name $unique_ref_names {
+        set count 0
+        foreach inst $instances {
+            if {[get_attribute $inst ref_name] == $ref_name} {
+                incr count
+            }
+        }
+        # Step 5: Print ref_name and count
+        puts "Reference Name: $ref_name | Instance Count: $count"
+    }
+}
+dc_shell> 
+dc_shell> # Example Usage
+dc_shell> get_instance_count
+dc_shell> 
+dc_shell> proc get_instance_count {} {
+    # Step 1: Get all instances where "is_hierarchical == false"
+    set instances [get_cells -filter "is_hierarchical==false"]
+    # Step 2: Get a list of all the ref_name attributes for these instances
+    set ref_name_list {}
+    foreach inst $instances {
+        lappend ref_name_list [get_attribute $inst ref_name]
+    }
+    # Step 3: Sort and get unique ref_name values
+    set unique_ref_names [lsort -unique $ref_name_list]
+    # Step 4: Loop through each unique ref_name and count occurrences
+    foreach ref_name $unique_ref_names {
+        set count 0
+        foreach inst $instances {
+            if {[get_attribute $inst ref_name] == $ref_name} {
+                incr count
+            }
+        }
+        # Step 5: Print ref_name and count
+        puts "Reference Name: $ref_name | Instance Count: $count"
+    }
+}
+dc_shell> set p [get_instance_count]
+dc_shell> echo $p
+dc_shell> 
+dc_shell> set instances [get_cells -filter "is_hierarchical==false"]
+dc_shell> 
+dc_shell> 
